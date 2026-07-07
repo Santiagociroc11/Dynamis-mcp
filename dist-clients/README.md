@@ -6,15 +6,15 @@ Para usar las **skills** de DYNAMIS en clientes que **no soportan MCP stdio loca
 
 ## Paquetes
 
-| Paquete | Para | Cómo |
-|---|---|---|
-| `dynamis-claude-project.zip` | claude.ai (web/desktop) | Project + Knowledge |
-| `dynamis-chatgpt-gpt.zip` | ChatGPT (Custom GPT) | Custom GPT + Knowledge |
+| Paquete | Para | Cómo | Archivos |
+|---|---|---|---|
+| `dynamis-claude-project.zip` | claude.ai (web/desktop) | Project + Knowledge | 8 skills + 8 síntesis + indice |
+| `dynamis-chatgpt-gpt.zip` | ChatGPT (Custom GPT) | Custom GPT + Knowledge | 8 skills + 8 síntesis + indice |
+| `dynamis-gemini-gem.zip` | Gemini (Gem) | Gem + Knowledge (máx 10) | skills-todas.md + sintesis-todas.md + indice (consolidado) |
 
 Cada zip contiene:
 - `INSTRUCCIONES.md` — qué pegar en las instrucciones + qué subir al knowledge.
-- `skills/` — las 8 skills operativas (`SKILL.md`).
-- `sintesis/` — las 8 síntesis cross-experto (A, C, D, E, F, G, H, I).
+- Las skills y síntesis (en carpetas para Claude/ChatGPT; consolidadas en un archivo cada una para Gemini, por su límite de 10 archivos).
 - `indice_maestro.md` — mapa de las 66 fichas y 16 clusters.
 
 ## Generar los zips
@@ -38,6 +38,12 @@ Genera `dist-clients/dynamis-claude-project.zip` y `dist-clients/dynamis-chatgpt
 1. chatgpt.com → Explore GPTs → Create.
 2. Pega el bloque de `chatgpt-gpt/INSTRUCCIONES.md` en **Instructions**.
 3. Sube `skills/`, `sintesis/`, `indice_maestro.md` a **Knowledge**.
+4. (Privado) sube también tu `OPERADOR.md`.
+
+### Gemini Gem
+1. gemini.google.com → Gem manager → New Gem.
+2. Pega el bloque de `gemini-gem/INSTRUCCIONES.md` en **Instructions** (la primera línea fuerza el uso del knowledge).
+3. Sube SOLO `skills-todas.md`, `sintesis-todas.md`, `indice_maestro.md` a **Knowledge** (Gemini máx 10 archivos, por eso se consolida).
 4. (Privado) sube también tu `OPERADOR.md`.
 
 ## Importante
