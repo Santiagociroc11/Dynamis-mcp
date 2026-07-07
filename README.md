@@ -1,10 +1,75 @@
 # DYNAMIS — Sistema de doctrina de lanzamientos y ventas
 
-Sistema portable de doctrina operativa para infoproductos, construido a partir de 66 fichas de expertos agrupadas en 8 clusters (A, C, D, E, F, G, H, I). Incluye síntesis cross-experto, skills para Cursor y un meta-índice.
+Sistema portable de doctrina operativa para infoproductos, construido a partir de 66 fichas de expertos agrupadas en 8 clusters (A, C, D, E, F, G, H, I). Incluye síntesis cross-experto, skills para Cursor, un meta-índice, y un **MCP server** para usar la doctrina desde cualquier cliente MCP (Cursor, Claude Desktop, Windsurf, Continue, Cline, etc.).
 
 La doctrina de los expertos vive **separada del contexto del operador**. Cada usuario completa su propio `CEREBRO/OPERADOR.md` (no se commitea).
 
-## Qué contiene
+---
+
+## MCP server — usar DYNAMIS desde cualquier cliente
+
+El repo es también un paquete MCP ejecutable. Sin publicar a npmjs.com, cualquiera puede usarlo directo desde GitHub con `npx`.
+
+### Cursor — editar `.cursor/mcp.json`
+
+```json
+{
+  "mcpServers": {
+    "dynamis": {
+      "command": "npx",
+      "args": ["-y", "github:Santiagociroc11/Dynamis-mcp"]
+    }
+  }
+}
+```
+
+### Claude Desktop / otros clientes MCP
+
+Mismo comando `npx -y github:Santiagociroc11/Dynamis-mcp` sobre stdio. Al primer arranque, `npx` clona el repo, ejecuta `npm install` (que dispara `postinstall` → `npm run build` y genera `dist/` + `data/`), y arranca el servidor.
+
+### Recursos expuestos (5)
+
+| URI | Qué devuelve |
+|---|---|
+| `dynamis://indice` | Índice maestro (66 fichas, 16 clusters) |
+| `dynamis://ficha/{modulo}/{nombre}` | Ficha individual de un experto |
+| `dynamis://sintesis/{cluster}` | Síntesis cross-experto (A, C, D, E, F, G, H, I) |
+| `dynamis://skill/{nombre}` | Skill operativo (8 disponibles) |
+| `dynamis://tensiones` | 6 tensiones transversales |
+
+### Tools (7)
+
+- `buscar_doctrina(query, experto?, cluster?)` — busca en fichas y síntesis (insensible a acentos).
+- `validar_atribucion(experto, cluster)` — anti-fantasma: verifica EXPERTOS FUENTE antes de citar.
+- `que_skill_aplica(problema)` — meta-índice problema → skill + cluster.
+- `auditar_cluster(cluster)` — separa ★ consenso de ◇ una voz.
+- `get_benchmark(cluster?, metrica?)` — benchmarks, preserva `[¿?]`.
+- `sesgo_cluster(cluster)` — % Vinícius + lectura de confianza.
+- `listar_huecos(cluster?)` — huecos conocidos + fuente externa asignada.
+
+La referencia completa de tools y resources está en el código (`src/index.ts`).
+
+### Usar doctrina propia (path custom)
+
+```json
+{
+  "mcpServers": {
+    "dynamis": {
+      "command": "npx",
+      "args": ["-y", "github:Santiagociroc11/Dynamis-mcp"],
+      "env": { "DYNAMIS_PATH": "/ruta/a/data" }
+    }
+  }
+}
+```
+
+`DYNAMIS_PATH` apunta a una carpeta con `fichas/`, `sintesis/`, `skills/` e `indice_maestro.md`.
+
+---
+
+## Doctrina transferible (para Cursor)
+
+### Qué contiene
 
 ```
 CEREBRO/
@@ -31,7 +96,7 @@ CEREBRO/
 
 > D (tráfico/creativos) no tiene skill propio: es insumo para los skills de ads del operador.
 
-## Instalación en otro proyecto Cursor
+### Instalación en otro proyecto Cursor
 
 1. Clonar o descargar este repo.
 2. Copiar `CEREBRO/` al nuevo workspace.
@@ -40,7 +105,7 @@ CEREBRO/
 5. En el chat de Cursor, invocar `@dynamis-index` cuando no sepas qué skill usar.
 6. Opcional — agregar a las reglas del proyecto: *"Si existe `CEREBRO/OPERADOR.md`, leelo antes de aplicar skills DYNAMIS."*
 
-## Cómo se usa (en el chat de Cursor)
+### Cómo se usa (en el chat de Cursor)
 
 ```
 ¿No sé por dónde empezar?  →  @dynamis-index
@@ -83,6 +148,25 @@ A los 3-4 launches, los números del operador pesan más que los de la mentoría
 4. **Skills** — convertir cada síntesis: ARSENAL OPERATIVO + MAPA DE TENSIONES → cuerpo del skill; CONDICIÓN DE DECISIÓN → lógica.
 5. **Meta-skill** — `dynamis-index/SKILL.md` mapea skills, tensiones transversales y huecos.
 6. **Operador** — cada usuario completa `OPERADOR.md` y agrega RESULTADOS PROPIOS tras cada launch.
+
+## Desarrollo del MCP
+
+```bash
+npm install        # instala deps + corre postinstall (build: copy-data + tsc)
+npm run build      # regenera dist/ y data/ manualmente
+npm start          # arranca el servidor stdio
+```
+
+Estructura del paquete:
+
+```
+package.json       bin: dynamis-mcp -> dist/index.js
+src/index.ts       código fuente del MCP server
+scripts/copy-data.mjs   copia CEREBRO/DYNAMIS + .cursor/skills -> data/
+tsconfig.json
+dist/              compilado (generado por build, en .gitignore)
+data/              doctrina copiada (generada por build, en .gitignore)
+```
 
 ## Contribuir
 

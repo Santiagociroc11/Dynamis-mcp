@@ -16,7 +16,8 @@
     "copy-data": "node scripts/copy-data.mjs",
     "build": "npm run copy-data && tsc",
     "start": "node dist/index.js",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "^2.0.0-beta.2",
@@ -36,7 +37,18 @@
     "lanzamientos",
     "ventas",
     "doctrina",
-    "model-context-protocol"
+    "model-context-protocol",
+    "cursor",
+    "claude"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "author": "SantiagoCiro",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Santiagociroc11/Dynamis-mcp.git"
+  },
+  "homepage": "https://github.com/Santiagociroc11/Dynamis-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/Santiagociroc11/Dynamis-mcp/issues"
+  }
 }

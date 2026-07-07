@@ -3,8 +3,8 @@ import * as path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const srcDynamis = path.join(__dirname, "..", "..", "CEREBRO", "DYNAMIS");
-const srcSkills = path.join(__dirname, "..", "..", ".cursor", "skills");
+const srcDynamis = path.join(__dirname, "..", "CEREBRO", "DYNAMIS");
+const srcSkills = path.join(__dirname, "..", ".cursor", "skills");
 const dest = path.join(__dirname, "..", "data");
 const destSkills = path.join(dest, "skills");
 
