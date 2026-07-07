@@ -27,6 +27,31 @@ El repo es también un paquete MCP ejecutable. Sin publicar a npmjs.com, cualqui
 
 Mismo comando `npx -y github:Santiagociroc11/Dynamis-mcp` sobre stdio. Al primer arranque, `npx` clona el repo, ejecuta `npm install` (que dispara `postinstall` → `npm run build` y genera `dist/` + `data/`), y arranca el servidor.
 
+### Alternativa local (si `npx` falla en tu entorno)
+
+En algunos entornos Windows con Node muy nuevo, `npx.cmd` puede fallar al resolver `npx-cli.js`. Si `npx -y github:...` no arranca, usa el bin local directamente:
+
+```bash
+git clone https://github.com/Santiagociroc11/Dynamis-mcp.git
+cd Dynamis-mcp
+npm install        # instala deps + genera dist/ y data/ via postinstall
+```
+
+Y en el `mcp.json` apunta al bin compilado con su path absoluto:
+
+```json
+{
+  "mcpServers": {
+    "dynamis": {
+      "command": "node",
+      "args": ["C:/ruta/absoluta/al/Dynamis-mcp/dist/index.js"]
+    }
+  }
+}
+```
+
+Esta forma evita `npx` por completo y es 100% reproducible. Para actualizar la doctrina, `git pull && npm run build`.
+
 ### Recursos expuestos (5)
 
 | URI | Qué devuelve |
