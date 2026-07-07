@@ -1,0 +1,17 @@
+# Contexto personal del operador — NO se commitea (cada uno el suyo)
+CEREBRO/OPERADOR.md
+
+# Datos de launches reales (el operador los agrega localmente)
+# Las plantillas RESULTADOS PROPIOS en skills sí se commitean; esto previene logs personales
+**/RESULTADOS_PROPIOS.log
+**/RESULTADOS_PROPIOS.local.md
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Zips de distribución
+*.zip
