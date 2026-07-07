@@ -1,0 +1,42 @@
+{
+  "name": "dynamis-mcp",
+  "version": "1.0.0",
+  "description": "MCP server del sistema de doctrina DYNAMIS — lanzamientos y ventas de infoproductos. Busca sobre 66 fichas de expertos, valida anti-fantasma y mapea problemas a skills.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "dynamis-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "data",
+    "README.md"
+  ],
+  "scripts": {
+    "copy-data": "node scripts/copy-data.mjs",
+    "build": "npm run copy-data && tsc",
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.0.0-beta.2",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "@types/node": "^22.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "mcp",
+    "dynamis",
+    "infoproductos",
+    "lanzamientos",
+    "ventas",
+    "doctrina",
+    "model-context-protocol"
+  ],
+  "license": "MIT"
+}

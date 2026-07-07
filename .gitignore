@@ -13,5 +13,10 @@ Thumbs.db
 .vscode/
 .idea/
 
+# MCP (Node) — se regenera con npm run build
+mcp/node_modules/
+mcp/dist/
+mcp/data/
+
 # Zips de distribución
 *.zip
